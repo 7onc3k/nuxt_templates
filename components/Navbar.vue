@@ -29,7 +29,8 @@
                     class="text-white text-4xl lg:text-5xl">Contact</a>
             </div>
 
-            <div :class="{ 'fade-out': selectedLink }" v-if="isOpen" @click="toggleMenu" class="cursor-pointer flex justify-end items-center h-20 lg:h-24 px-4 lg:px-8 mr-4 lg:mr-0">
+            <div :class="{ 'fade-out': selectedLink }" v-if="isOpen" @click="toggleMenu"
+                class="cursor-pointer flex justify-end items-center h-20 lg:h-24 px-4 lg:px-8 mr-4 lg:mr-0">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 lg:w-8 lg:h-8 text-white" height="1em"
                     viewBox="0 0 448 512">
                     <path
@@ -60,7 +61,7 @@ export default {
     },
     methods: {
         checkMobile() {
-            this.isMobile = window.innerWidth <= 768; 
+            this.isMobile = window.innerWidth <= 768;
         },
         toggleMenu() {
             this.isOpen = !this.isOpen;
@@ -76,7 +77,7 @@ export default {
 
             // Vybraný odkaz se posune na své místo
             setTimeout(() => {
-                let targetPosition = this.isMobile ? 112 : 144; 
+                let targetPosition = this.isMobile ? 112 : 144;
                 let linkPosition = event.target.getBoundingClientRect().top;
                 let moveDistance = linkPosition - targetPosition;
 
@@ -94,13 +95,25 @@ export default {
                 event.target.style.opacity = '0';
             }, 900);
 
+            // Navbar se posune nahoru mimo obrazovku
+            setTimeout(() => {
+                document.querySelector('.bg-blue-600').style.transform = 'translateY(-100%)';
+                this.isOpen = false;
+            }, 1000);
+
+            // Navbar se hladce vrátí dolů na svou původní pozici
+            setTimeout(() => {
+                document.querySelector('.bg-blue-600').style.opacity = '1';
+                document.querySelector('.bg-blue-600').style.transform = 'translateY(0)';
+            }, 1200);
+
             // Reset stavu po všech animacích
             setTimeout(() => {
-                this.isOpen = false;
+                
                 this.fadeOut = false;
                 this.move = false;
                 this.selectedLink = null;
-            }, 1200);
+            }, 1900);
         }
     },
 };
@@ -115,4 +128,13 @@ export default {
 .move {
     transition: transform 0.3s ease-out;
 }
+
+.bg-blue-600 {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.transition-all {
+    transition: all 0.5s ease-in-out; /* Zvyšte dobu trvání a upravte funkci snadnosti */
+}
+
 </style>
