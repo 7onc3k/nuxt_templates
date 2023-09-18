@@ -105,7 +105,7 @@ export default {
             setTimeout(() => {
                 document.querySelector('.bg-blue-600').style.opacity = '1';
                 document.querySelector('.bg-blue-600').style.transform = 'translateY(0)';
-            }, 1200);
+            }, 1500);
 
             // Reset stavu po všech animacích
             setTimeout(() => {
